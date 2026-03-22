@@ -1,18 +1,27 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ShoppingCart, User, Menu, X, LogOut, BookOpen } from 'lucide-react';
+import { ShoppingCart, Menu, X, LogOut, BookOpen } from 'lucide-react';
 import { useAuthStore } from '../../store/authStore';
 import { useCartStore } from '../../store/cartStore';
 import { Button } from './Button';
 
 export const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+
   const { isAuthenticated, user, logout } = useAuthStore();
-  const { items } = useCartStore();
+  const { cart, fetchCart } = useCartStore();
+
   const navigate = useNavigate();
 
-  const cartItemsCount = items.reduce((sum, item) => sum + item.quantity, 0);
+  useEffect(() => {
+    fetchCart();
+  }, []);
+
+  const cartItemsCount = cart.reduce(
+    (sum, item) => sum + (item.quantity || 0),
+    0
+  );
 
   const handleLogout = () => {
     logout();

@@ -17,21 +17,23 @@ export const useMenuStore = create<MenuState>((set) => ({
   categories: [],
   loading: false,
   error: null,
+
   fetchMenu: async () => {
     set({ loading: true, error: null });
     try {
-      const res: AxiosResponse<{items: MenuItem[], pagination: any}> = await apiClient.get(GET_MENU_ITEM);
+      const res: AxiosResponse<{ items: MenuItem[]; pagination: unknown }> =
+        await apiClient.get(GET_MENU_ITEM);
       const items: MenuItem[] = res.data.items;
-      console.log("Fetched menu items:", items);
       const uniqueCategories = [
         "All",
         ...Array.from(new Set(items.map((item) => item.category))),
       ];
       set({ menuItems: items, categories: uniqueCategories, loading: false });
-    } catch (error: any) {
+    } catch (error: unknown) {
+      const err = error as { response?: { data?: { message?: string } } };
       set({
         loading: false,
-        error: error.response?.data?.message ?? "Failed to load menu",
+        error: err.response?.data?.message ?? "Failed to load menu",
       });
     }
   },

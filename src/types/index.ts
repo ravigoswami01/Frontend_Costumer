@@ -1,4 +1,4 @@
-export type UserRole = 'admin' | 'customer' | 'staff' | 'owner';
+export type UserRole = "admin" | "customer" | "staff" | "owner";
 
 export interface User {
   id: string;
@@ -17,31 +17,58 @@ export interface AuthState {
   hasRole: (role: UserRole) => boolean;
 }
 
+export interface Rating {
+  average: number;
+  count: number;
+}
+
+export interface RestaurantRef {
+  _id: string;
+  name: string;
+}
+
 export interface MenuItem {
   _id: string;
-  name?: string;
+  name: string;
   description: string;
   price: number;
   originalPrice?: number;
   imageUrl: string;
+  imagePublicId: string;
   category: string;
-  rating: {
-    average: number;
-    count: number;
-  };
+  rating: Rating;
   calories?: number;
   discount?: number;
   isPopular?: boolean;
-  tags?: string[];
-  restaurantId: {
-    _id: string;
-    name: string;
-  };
-  imagePublicId: string;
   isAvailable: boolean;
   isActive: boolean;
+  tags?: string[];
+  restaurantId: RestaurantRef;
   createdAt: string;
   updatedAt: string;
+}
+
+export interface CartItem {
+  menuItemId: string;
+  quantity: number;
+  name?: string;
+  price?: number;
+  image?: string;
+  description?: string;
+}
+
+export interface CartState {
+  cart: CartItem[];
+  loading: boolean;
+  getCartCount: () => number;
+  getCartTotal: () => number;
+  fetchCart: () => Promise<void>;
+  addToCart: (item: MenuItem) => Promise<void>;
+  updateQty: (id: string, quantity: number) => Promise<void>;
+  removeFromCart: (id: string) => Promise<void>;
+  clearCart: () => Promise<void>;
+  mergeCart: () => Promise<void>;
+  clearLocalCart: () => void;
 }
 
 export interface Category {
@@ -61,20 +88,7 @@ export interface Booking {
   email: string;
   phone: string;
   specialRequests?: string;
-  status: 'pending' | 'confirmed' | 'cancelled';
-}
-
-export interface CartItem extends MenuItem {
-  quantity: number;
-}
-
-export interface CartState {
-  items: CartItem[];
-  addItem: (item: MenuItem) => void;
-  removeItem: (id: string) => void;
-  updateQuantity: (id: string, quantity: number) => void;
-  clearCart: () => void;
-  total: number;
+  status: "pending" | "confirmed" | "cancelled";
 }
 
 export interface Review {
