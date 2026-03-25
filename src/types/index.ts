@@ -99,3 +99,44 @@ export interface Review {
   rating: number;
   text: string;
 }
+
+export type OrderStatus =
+  | "pending"
+  | "confirmed"
+  | "preparing"
+  | "ready"
+  | "out-for-delivery"
+  | "delivered"
+  | "completed"
+  | "cancelled";
+
+export type OrderType = "dine-in" | "delivery";
+
+export interface OrderItem {
+  menuItemId: string;
+  name: string;
+  quantity: number;
+}
+
+export interface Restaurant {
+  _id: string;
+  name: string;
+}
+
+export interface Order {
+  _id: string;
+  orderNumber: string;
+  restaurantId: Restaurant;
+  items: OrderItem[];
+  total: number;
+  orderType: OrderType;
+  tableNumber?: string;
+  status: OrderStatus;
+  createdAt: string;
+}
+
+export interface Pagination {
+  total: number;
+  page: number;
+  pages: number;
+}

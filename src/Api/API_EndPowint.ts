@@ -11,7 +11,15 @@
  const GET_CART = "/api/cart/";
  const UPDATE_QTY = "/api/cart/update";
  const REMOVE_FROM_CART = "/api/cart/remove/:menuItemId";
- const CLEAR_CART = "/api/cart/clear";    
+ const CLEAR_CART = "/api/cart/clear"; 
+ 
+ // api for order
+ const PLACE_ORDER = "/api/orders/place";
+const GET_ORDERS = "/api/orders/";
+const GET_ORDER_BY_ID = "/api/orders/:id";
+const UPDATE_ORDER_STATUS = "/api/orders/:id/status";
+const CREATE_ORDER = "/api/orders";
+const CANCEL_ORDER = "/api/orders/:id/cancel";
  
 
- export { LOGIN, REGISTER, GET_MENU_ITEM, ADD_TO_CART, GET_CART, UPDATE_QTY, REMOVE_FROM_CART, CLEAR_CART };
+ export { LOGIN, REGISTER, GET_MENU_ITEM, ADD_TO_CART, GET_CART, UPDATE_QTY, REMOVE_FROM_CART, CLEAR_CART, PLACE_ORDER, GET_ORDERS, GET_ORDER_BY_ID, UPDATE_ORDER_STATUS, CREATE_ORDER, CANCEL_ORDER };
